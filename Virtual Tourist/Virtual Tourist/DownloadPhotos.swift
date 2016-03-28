@@ -129,7 +129,7 @@ class DownloadPhotos {
 
 						if let photosArray = photosDictionary["photo"] as? [[String: AnyObject]] {
 
-							for var photoCount = 0; photoCount < totalPhotosVal; ++photoCount {
+							for photoCount in 0 ..< totalPhotosVal {
 								let photoDictionary = photosArray[photoCount] as [String: AnyObject]
 								var imageUrlString = photoDictionary["url_m"] as? String
 

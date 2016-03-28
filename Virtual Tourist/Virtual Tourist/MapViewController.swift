@@ -46,7 +46,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 			mapView.addAnnotation(pin)
 		}
 
-		let longPress = UILongPressGestureRecognizer(target: self, action: "action:")
+		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.action(_:)))
 		longPress.minimumPressDuration = 1.0
 		longPress.allowableMovement = 0.0
 		mapView.addGestureRecognizer(longPress)

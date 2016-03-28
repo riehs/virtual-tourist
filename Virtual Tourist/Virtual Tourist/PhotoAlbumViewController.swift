@@ -145,7 +145,7 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 		//Delete the photo from the Core Data context.
 		sharedContext.deleteObject(pin.photos[indexPath.item] as NSManagedObject)
 
-		self.collectionView.photoCount--
+		self.collectionView.photoCount -= 1
 		CoreDataStackManager.sharedInstance().saveContext()
 
 		//Delete the photo from the tableView.
