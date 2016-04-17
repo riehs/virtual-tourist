@@ -68,16 +68,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 				if error != nil {
 					title = "Reverse geocoder failed with error" + error!.localizedDescription
-				}
-				if placemarks!.count > 0 {
-					let pm = placemarks!.first
-					if pm!.locality != nil {
-						title = pm!.locality!
-					} else {
-						title = "Unknown Location"
-					}
 				} else {
-					title = "Problem with the data received from geocoder."
+					if placemarks!.count > 0 {
+						let pm = placemarks!.first
+						if pm!.locality != nil {
+							title = pm!.locality!
+						} else {
+							title = "Unknown Location"
+						}
+					} else {
+						title = "Problem with the data received from geocoder."
+					}
 				}
 
 				//Create pin and place on map.
