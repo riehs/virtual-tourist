@@ -78,7 +78,10 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 					self.newCollectionButton.enabled = true
 				})
 			} else {
-				self.errorAlert("Error", error: errorString!)
+				dispatch_async(dispatch_get_main_queue(), {
+					self.errorAlert("Error", error: errorString!)
+					self.newCollectionButton.enabled = true
+				})
 			}
 		}
 	}

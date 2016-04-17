@@ -60,7 +60,7 @@ class DownloadPhotos {
 
 		let task = session.dataTaskWithRequest(request) {data, response, downloadError in
 			if let error = downloadError {
-				print("Could not complete the request \(error)")
+				completionHandler(success: false, errorString: "Could not complete the request \(error)")
 			} else {
 
 				let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
