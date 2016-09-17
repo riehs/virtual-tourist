@@ -34,13 +34,13 @@ class DownloadPhotos {
 
 
 	//The Flickr API requires that locations are stated as boxes rather than points.
-	func createBoundingBoxString(latitude: Double, longitude: Double) -> String {
+	func createBoundingBoxString(_ latitude: Double, longitude: Double) -> String {
 		return "\(longitude - BOUNDING_BOX_HALF_WIDTH),\(latitude - BOUNDING_BOX_HALF_HEIGHT),\(longitude + BOUNDING_BOX_HALF_WIDTH),\(latitude + BOUNDING_BOX_HALF_HEIGHT)"
 	}
 
 
 	//This function determines how many pages of relevant photos are available.
-	func getImageFromFlickrBySearch(photoAlbum: PhotoCollectionView, pin: Pin, completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func getImageFromFlickrBySearch(_ photoAlbum: PhotoCollectionView, pin: Pin, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
 		let methodArguments = [
 			"method": METHOD_NAME,
@@ -53,19 +53,19 @@ class DownloadPhotos {
 			"per_page": PER_PAGE
 		]
 
-		let session = NSURLSession.sharedSession()
-		let urlString = BASE_URL + escapedParameters(methodArguments)
-		let url = NSURL(string: urlString)!
-		let request = NSURLRequest(URL: url)
+		let session = URLSession.shared
+		let urlString = BASE_URL + escapedParameters(methodArguments as [String : AnyObject])
+		let url = URL(string: urlString)!
+		let request = URLRequest(url: url)
 
-		let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+		let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
 			if let error = downloadError {
-				completionHandler(success: false, errorString: "Could not complete the request \(error)")
+				completionHandler(false, "Could not complete the request \(error)")
 			} else {
 
-				let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+				let parsedResult = (try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
-				if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
+				if let photosDictionary = parsedResult.value(forKey: "photos") as? [String:AnyObject] {
 
 					if let totalPages = photosDictionary["pages"] as? Int {
 
@@ -74,47 +74,47 @@ class DownloadPhotos {
 						let randomPage = Int(arc4random_uniform(UInt32(pageLimit) + 1))
 
 						//A function is called that only fetches photos for the selected page.
-						self.getImageFromFlickrBySearchWithPage(methodArguments, pageNumber: randomPage, photoAlbum: photoAlbum, pin: pin) { (success, errorString) in
+						self.getImageFromFlickrBySearchWithPage(methodArguments as [String : AnyObject], pageNumber: randomPage, photoAlbum: photoAlbum, pin: pin) { (success, errorString) in
 							if success {
-								completionHandler(success: true, errorString: nil)
+								completionHandler(true, nil)
 							} else {
-								completionHandler(success: false, errorString: errorString)
+								completionHandler(false, errorString)
 							}
 						}
 
 					} else {
-						completionHandler(success: false, errorString: "Cannot find key 'pages' in \(photosDictionary)")
+						completionHandler(false, "Cannot find key 'pages' in \(photosDictionary)")
 					}
 				} else {
-					completionHandler(success: false, errorString: "Cannot find key 'photos' in \(parsedResult)")
+					completionHandler(false, "Cannot find key 'photos' in \(parsedResult)")
 				}
 			}
-		}
+		}) 
 
 		task.resume()
 	}
 
 
 	//Fetches photos from Flickr from the randomly-selected page.
-	func getImageFromFlickrBySearchWithPage(methodArguments: [String : AnyObject], pageNumber: Int, photoAlbum: PhotoCollectionView, pin: Pin, completionHandler: (success: Bool, errorString: String?) -> Void) {
+	func getImageFromFlickrBySearchWithPage(_ methodArguments: [String : AnyObject], pageNumber: Int, photoAlbum: PhotoCollectionView, pin: Pin, completionHandler: @escaping (_ success: Bool, _ errorString: String?) -> Void) {
 
 		//Add the page to the method's arguments
 		var withPageDictionary = methodArguments
-		withPageDictionary["page"] = pageNumber
+		withPageDictionary["page"] = pageNumber as AnyObject?
 
-		let session = NSURLSession.sharedSession()
+		let session = URLSession.shared
 		let urlString = BASE_URL + escapedParameters(withPageDictionary)
-		let url = NSURL(string: urlString)!
-		let request = NSURLRequest(URL: url)
+		let url = URL(string: urlString)!
+		let request = URLRequest(url: url)
 
-		let task = session.dataTaskWithRequest(request) {data, response, downloadError in
+		let task = session.dataTask(with: request, completionHandler: {data, response, downloadError in
 			if let error = downloadError {
-				completionHandler(success: false, errorString: "Could not complete the request \(error)")
+				completionHandler(false, "Could not complete the request \(error)")
 			} else {
 
-				let parsedResult = (try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as! NSDictionary
+				let parsedResult = (try! JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.allowFragments)) as! NSDictionary
 
-				if let photosDictionary = parsedResult.valueForKey("photos") as? [String:AnyObject] {
+				if let photosDictionary = parsedResult.value(forKey: "photos") as? [String:AnyObject] {
 					var totalPhotosVal = 0
 					if let totalPhotos = photosDictionary["total"] as? String {
 						totalPhotosVal = (totalPhotos as NSString).integerValue
@@ -134,21 +134,21 @@ class DownloadPhotos {
 								var imageUrlString = photoDictionary["url_m"] as? String
 
 								//The "_q" filename suffix downloads small square photos from Flickr.
-								imageUrlString = imageUrlString!.stringByReplacingOccurrencesOfString(".jpg", withString: "_q.jpg")
+								imageUrlString = imageUrlString!.replacingOccurrences(of: ".jpg", with: "_q.jpg")
 
-								if let imageURL = NSURL(string: imageUrlString!) {
+								if let imageURL = URL(string: imageUrlString!) {
 
-									if let imageData = NSData(contentsOfURL: imageURL) {
+									if let imageData = try? Data(contentsOf: imageURL) {
 
-										dispatch_async(dispatch_get_main_queue(), {
+										DispatchQueue.main.async(execute: {
 
-											let fileManager = NSFileManager.defaultManager()
-											let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]
-											let filePathToWrite = "\(path)/\(imageURL.lastPathComponent!)"
+											let fileManager = FileManager.default
+											let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+											let filePathToWrite = "\(path)/\(imageURL.lastPathComponent)"
 
 											//If the photo is successfully saved to the Documents folder, a Photo object is created and saved to the pin.
-											if  fileManager.createFileAtPath(filePathToWrite, contents: imageData, attributes: nil) {
-												Photo(imageFileName: imageURL.lastPathComponent!, context: self.sharedContext).pin = pin
+											if  fileManager.createFile(atPath: filePathToWrite, contents: imageData, attributes: nil) {
+												Photo(imageFileName: imageURL.lastPathComponent, context: self.sharedContext).pin = pin
 
 												//Save photo to Core Data.
 												CoreDataStackManager.sharedInstance().saveContext()
@@ -159,35 +159,35 @@ class DownloadPhotos {
 										})
 
 									} else {
-										completionHandler(success: false, errorString: "Image does not exist at \(imageURL)")
+										completionHandler(false, "Image does not exist at \(imageURL)")
 									}
 								} else {
-									completionHandler(success: false, errorString: "Error")
+									completionHandler(false, "Error")
 								}
 							}
 
 							//All of the photos were successfully loaded.
 							pin.loading = false
-							completionHandler(success: true, errorString: nil)
+							completionHandler(true, nil)
 
 						} else {
-							completionHandler(success: false, errorString: "Cannot find key 'photo' in \(photosDictionary)")
+							completionHandler(false, "Cannot find key 'photo' in \(photosDictionary)")
 						}
 					} else {
-						completionHandler(success: false, errorString: "No photos found.")
+						completionHandler(false, "No photos found.")
 					}
 				} else {
-					completionHandler(success: false, errorString: "Cant find key 'photos' in \(parsedResult)")
+					completionHandler(false, "Cant find key 'photos' in \(parsedResult)")
 				}
 			}
-		}
+		}) 
 
 		task.resume()
 	}
 
 
 	/* Helper function: Given a dictionary of parameters, convert to a string for a url */
-	func escapedParameters(parameters: [String : AnyObject]) -> String {
+	func escapedParameters(_ parameters: [String : AnyObject]) -> String {
 
 		var urlVars = [String]()
 
@@ -197,13 +197,13 @@ class DownloadPhotos {
 			let stringValue = "\(value)"
 
 			/* FIX: Replace spaces with '+' */
-			let replaceSpaceValue = stringValue.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
+			let replaceSpaceValue = stringValue.replacingOccurrences(of: " ", with: "+", options: NSString.CompareOptions.literal, range: nil)
 
 			/* Append it */
 			urlVars += [key + "=" + "\(replaceSpaceValue)"]
 		}
 
-		return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
+		return (!urlVars.isEmpty ? "?" : "") + urlVars.joined(separator: "&")
 	}
 
 

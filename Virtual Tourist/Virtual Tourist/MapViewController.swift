@@ -53,13 +53,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	}
 
 
-	func action(gestureRecognizer:UIGestureRecognizer) {
-		if gestureRecognizer.enabled {
-			gestureRecognizer.enabled = false
+	func action(_ gestureRecognizer:UIGestureRecognizer) {
+		if gestureRecognizer.isEnabled {
+			gestureRecognizer.isEnabled = false
 
-			let touchPoint = gestureRecognizer.locationInView(mapView)
+			let touchPoint = gestureRecognizer.location(in: mapView)
 
-			let newCoord: CLLocationCoordinate2D = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
+			let newCoord: CLLocationCoordinate2D = mapView.convert(touchPoint, toCoordinateFrom: mapView)
 
 			var title = ""
 
@@ -83,51 +83,55 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 				//Create pin and place on map.
 				let pin = Pin(latitude: newCoord.latitude, longitude: newCoord.longitude, title: title, context: self.sharedContext)
-				self.pins.append(pin)
+				
+				//TODO - This line shouldn't be necessary. For some reason, the initializer is setting the title to nil.
+				pin.title = title
 
+				self.pins.append(pin)
+				
 				CoreDataStackManager.sharedInstance().saveContext()
 
 				self.mapView.addAnnotation(pin)
 
-				gestureRecognizer.enabled = true
+				gestureRecognizer.isEnabled = true
 			})
 		}
 	}
 
 
 	//Sends the the pin that was tapped on to the PhotoAlbumViewController.
-	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-			let photoAlbumVC:PhotoAlbumViewController = segue.destinationViewController as! PhotoAlbumViewController
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+			let photoAlbumVC:PhotoAlbumViewController = segue.destination as! PhotoAlbumViewController
 			photoAlbumVC.pin = sender as! Pin
 	}
 
 
 	//Segues to the Photo Album when the annotation info box is tapped.
-	func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-		performSegueWithIdentifier("goToPictures", sender: view.annotation)
+	func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+		performSegue(withIdentifier: "goToPictures", sender: view.annotation)
 	}
 
 
 	//Adds a "callout" to the annotation info box so that it can be tapped to access the photos.
-	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		let view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "MapAnnotation")
 		view.animatesDrop = true
 		view.canShowCallout = true
 		view.calloutOffset = CGPoint(x: -5, y: 5)
-		view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+		view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure) as UIView
 		return view
 	}
 
 
 	//Loads the map center and zoom level from Core Data.
 	func fetchMap() -> [Map] {
-		let error: NSErrorPointer = nil
-		let fetchRequest = NSFetchRequest(entityName: "Map")
+		let error: NSErrorPointer? = nil
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Map")
 		let results: [AnyObject]?
 		do {
-			results = try sharedContext.executeFetchRequest(fetchRequest)
+			results = try sharedContext.fetch(fetchRequest)
 		} catch let error1 as NSError {
-			error.memory = error1
+			error??.pointee = error1
 			results = nil
 		}
 
@@ -141,13 +145,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	//Loads pins from Core Data.
 	func fetchAllPins() -> [Pin] {
-		let error: NSErrorPointer = nil
-		let fetchRequest = NSFetchRequest(entityName: "Pin")
+		let error: NSErrorPointer? = nil
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
 		let results: [AnyObject]?
 		do {
-			results = try sharedContext.executeFetchRequest(fetchRequest)
+			results = try sharedContext.fetch(fetchRequest)
 		} catch let error1 as NSError {
-			error.memory = error1
+			error??.pointee = error1
 			results = nil
 		}
 
@@ -160,7 +164,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 
 	//Saves the map state to Core Data whenever the location or zoom is changed.
-	func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool){
+	func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool){
 		map[0].latitude = mapView.centerCoordinate.latitude
 		map[0].longitude = mapView.centerCoordinate.longitude
 		map[0].altitude = mapView.camera.altitude

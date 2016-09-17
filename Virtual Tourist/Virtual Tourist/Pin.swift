@@ -34,20 +34,20 @@ class Pin: NSManagedObject, MKAnnotation {
 
 
 	//The standard Core Data init method.
-	override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+	override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+		super.init(entity: entity, insertInto: context)
 	}
 
 
 	//Load pins from Core Data.
 	func fetchAllPhotos() -> [Pin] {
-		let error: NSErrorPointer = nil
-		let fetchRequest = NSFetchRequest(entityName: "Pin")
+		let error: NSErrorPointer? = nil
+		let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Pin")
 		let results: [AnyObject]?
 		do {
-			results = try sharedContext.executeFetchRequest(fetchRequest)
+			results = try sharedContext.fetch(fetchRequest)
 		} catch let error1 as NSError {
-			error.memory = error1
+			error??.pointee = error1
 			results = nil
 		}
 
@@ -63,9 +63,9 @@ class Pin: NSManagedObject, MKAnnotation {
 	init(latitude: Double, longitude: Double, title: String, context: NSManagedObjectContext) {
 
 		//The entity name here is the same as the entity name in the Model.xcdatamodeld file.
-		let entity =  NSEntityDescription.entityForName("Pin", inManagedObjectContext: context)!
+		let entity =  NSEntityDescription.entity(forEntityName: "Pin", in: context)!
 
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+		super.init(entity: entity, insertInto: context)
 
 		self.latitude = latitude
 		self.longitude = longitude

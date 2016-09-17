@@ -20,7 +20,7 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 
 	@IBOutlet weak var newCollectionButton: UIBarButtonItem!
 
-	@IBAction func getNewCollection(sender: AnyObject) {
+	@IBAction func getNewCollection(_ sender: AnyObject) {
 		getNewCollection()
 	}
 
@@ -47,11 +47,11 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 		if pin.loading {
 
 			//Disables "New Collection" button while photos are loading.
-			newCollectionButton.enabled = false
+			newCollectionButton.isEnabled = false
 			DownloadPhotos.sharedInstance().getImageFromFlickrBySearch(collectionView, pin: pin) { (success, errorString) in
 				if success {
-					dispatch_async(dispatch_get_main_queue(), {
-						self.newCollectionButton.enabled = true
+					DispatchQueue.main.async(execute: {
+						self.newCollectionButton.isEnabled = true
 					})
 
 				} else {
@@ -67,20 +67,20 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 
 		pin.loading = true
 		for photo in pin.photos {
-			sharedContext.deleteObject(photo as NSManagedObject)
+			sharedContext.delete(photo as NSManagedObject)
 		}
 
 		//Disables "New Collection" button while photos are loading.
-		newCollectionButton.enabled = false
+		newCollectionButton.isEnabled = false
 		DownloadPhotos.sharedInstance().getImageFromFlickrBySearch(collectionView, pin: pin) { (success, errorString) in
 			if success {
-				dispatch_async(dispatch_get_main_queue(), {
-					self.newCollectionButton.enabled = true
+				DispatchQueue.main.async(execute: {
+					self.newCollectionButton.isEnabled = true
 				})
 			} else {
-				dispatch_async(dispatch_get_main_queue(), {
+				DispatchQueue.main.async(execute: {
 					self.errorAlert("Error", error: errorString!)
-					self.newCollectionButton.enabled = true
+					self.newCollectionButton.isEnabled = true
 				})
 			}
 		}
@@ -88,10 +88,10 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 
 
 	//Creates an Alert-style error message.
-	func errorAlert(title: String, error: String) {
-		let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .Alert)
-		controller.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-		presentViewController(controller, animated: true, completion: nil)
+	func errorAlert(_ title: String, error: String) {
+		let controller: UIAlertController = UIAlertController(title: title, message: error, preferredStyle: .alert)
+		controller.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+		present(controller, animated: true, completion: nil)
 	}
 
 
@@ -111,7 +111,7 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 	}
 
 
-	func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		if pin.photos.count > self.collectionView.photoCount {
 			return pin.photos.count
 		} else {
@@ -120,18 +120,18 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 	}
 
 
-	func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell{
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
 
-		let cell = collectionView.dequeueReusableCellWithReuseIdentifier("imageCell", forIndexPath: indexPath) as! PhotoCell
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! PhotoCell
 
 		var photo: UIImage
 		
 		//Any cells with an index greater than the photo count (+1) must still be loading.
-		if ((indexPath.item + 1) <= pin.photos.count) {
-			cell.activityIndicator.hidden = true
-			photo = pin.photos[indexPath.item].image
+		if (((indexPath as NSIndexPath).item + 1) <= pin.photos.count) {
+			cell.activityIndicator.isHidden = true
+			photo = pin.photos[(indexPath as NSIndexPath).item].image
 		} else {
-			cell.activityIndicator.hidden = false
+			cell.activityIndicator.isHidden = false
 			photo = UIImage(named: "Loading")!
 		}
 
@@ -142,16 +142,16 @@ class PhotoAlbumViewController:  UIViewController, UICollectionViewDelegate, UIC
 
 
 	//Photos are deleted when users tap them.
-	func collectionView(tableView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath)
+	func collectionView(_ tableView: UICollectionView, didSelectItemAt indexPath: IndexPath)
 	{
 
 		//Delete the photo from the Core Data context.
-		sharedContext.deleteObject(pin.photos[indexPath.item] as NSManagedObject)
+		sharedContext.delete(pin.photos[(indexPath as NSIndexPath).item] as NSManagedObject)
 
 		self.collectionView.photoCount -= 1
 		CoreDataStackManager.sharedInstance().saveContext()
 
 		//Delete the photo from the tableView.
-		tableView.deleteItemsAtIndexPaths([indexPath])
+		tableView.deleteItems(at: [indexPath])
 	}
 }

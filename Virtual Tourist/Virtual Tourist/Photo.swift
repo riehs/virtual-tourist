@@ -27,8 +27,8 @@ class Photo: NSManagedObject {
 
 
 	//The standard Core Data init method.
-	override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+	override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+		super.init(entity: entity, insertInto: context)
 	}
 
 
@@ -36,18 +36,18 @@ class Photo: NSManagedObject {
 	init(imageFileName: String, context: NSManagedObjectContext) {
 
 		//The entity name here is the same as the entity name in the Model.xcdatamodeld file.
-		let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
+		let entity =  NSEntityDescription.entity(forEntityName: "Photo", in: context)!
 
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+		super.init(entity: entity, insertInto: context)
 
 		self.imageFileName = imageFileName
 	}
 
 
 	//Only the filename is stored in Core Data, because the location of the Documents folder changes when the app is re-run in the Xcode simulator.
-	func getFilePath(imageFileName: String) -> String {
+	func getFilePath(_ imageFileName: String) -> String {
 
-		let dirPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] 
+		let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] 
 		return "\(dirPath)/\(imageFileName)"
 	}
 
@@ -56,9 +56,9 @@ class Photo: NSManagedObject {
 	override func prepareForDeletion() {
 
 		//Delete the photo from the Documents folder.
-		let fileManager = NSFileManager.defaultManager()
+		let fileManager = FileManager.default
 		do {
-			try fileManager.removeItemAtPath(getFilePath(imageFileName))
+			try fileManager.removeItem(atPath: getFilePath(imageFileName))
 		} catch _ {
 		}
 	}

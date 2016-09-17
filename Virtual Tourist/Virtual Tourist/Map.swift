@@ -22,8 +22,8 @@ class Map: NSManagedObject {
 
 
 	//The standard Core Data init method.
-	override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+	override init(entity: NSEntityDescription, insertInto context: NSManagedObjectContext?) {
+		super.init(entity: entity, insertInto: context)
 	}
 
 
@@ -31,9 +31,9 @@ class Map: NSManagedObject {
 	init(latitude: Double, longitude: Double, altitude: Double, context: NSManagedObjectContext) {
 
 		//The entity name here is the same as the entity name in the Model.xcdatamodeld file.
-		let entity =  NSEntityDescription.entityForName("Map", inManagedObjectContext: context)!
+		let entity =  NSEntityDescription.entity(forEntityName: "Map", in: context)!
 
-		super.init(entity: entity, insertIntoManagedObjectContext: context)
+		super.init(entity: entity, insertInto: context)
 
 		self.latitude = latitude
 		self.longitude = longitude
