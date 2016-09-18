@@ -18,16 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KQ4-P7-DK4">
-                                <frame key="frameInset" width="600" height="600"/>
-                            </mapView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KQ4-P7-DK4"/>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="Dcj-ZO-fFO"/>
-                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="QfV-4W-3hN"/>
-                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="aoy-dO-qxN"/>
-                            <constraint firstAttribute="trailing" secondItem="KQ4-P7-DK4" secondAttribute="trailing" id="wEr-bi-wqr"/>
+                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="top" id="1PC-vD-r0b"/>
+                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="bv0-OX-bi1"/>
+                            <constraint firstItem="KQ4-P7-DK4" firstAttribute="bottom" secondItem="2fi-mo-0CV" secondAttribute="top" id="xHd-VB-Fx1"/>
+                            <constraint firstAttribute="trailing" secondItem="KQ4-P7-DK4" secondAttribute="trailing" id="xKM-uc-ubo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="rRF-3v-SxV">
@@ -40,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="365" y="339"/>
+            <point key="canvasLocation" x="364" y="338.68065967016497"/>
         </scene>
         <!--Photo Album View Controller-->
         <scene sceneID="jNq-IR-8FV">
@@ -54,26 +52,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" misplaced="YES" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-ko-JDt">
-                                <frame key="frameInset" minY="64" width="600" height="128"/>
+                            <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-ko-JDt">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="rpF-04-di7"/>
                                 </constraints>
                             </mapView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="q98-LA-WK0">
-                                <frame key="frameInset" minY="556" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cBr-16-oEB"/>
-                                    <barButtonItem title="New Collection" id="HTD-d4-OjH">
-                                        <connections>
-                                            <action selector="getNewCollection:" destination="u6X-SL-s42" id="TKG-Vb-M4J"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6lx-c0-UvD"/>
-                                </items>
-                            </toolbar>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-4S-ynY" customClass="PhotoCollectionView" customModule="Virtual_Tourist" customModuleProvider="target">
-                                <frame key="frameInset" minY="191" width="600" height="365"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-4S-ynY" customClass="PhotoCollectionView" customModule="Virtual_Tourist" customModuleProvider="target">
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="K1s-T1-Gua">
                                     <size key="itemSize" width="118" height="118"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -88,12 +72,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="118" height="118"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="SaP-ji-S0a">
-                                                    <frame key="frameInset" minX="49" minY="49" width="20" height="20"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </activityIndicatorView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="SaP-ji-S0a"/>
                                             </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="SaP-ji-S0a" firstAttribute="centerY" secondItem="5gk-65-h5W" secondAttribute="centerY" id="8k9-ip-TRV"/>
+                                            <constraint firstItem="SaP-ji-S0a" firstAttribute="centerX" secondItem="5gk-65-h5W" secondAttribute="centerX" id="E5A-yx-hNn"/>
+                                        </constraints>
                                         <connections>
                                             <outlet property="activityIndicator" destination="SaP-ji-S0a" id="W6v-K1-g8R"/>
                                         </connections>
@@ -104,19 +89,30 @@
                                     <outlet property="delegate" destination="u6X-SL-s42" id="YK3-yx-Ghg"/>
                                 </connections>
                             </collectionView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q98-LA-WK0">
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="cBr-16-oEB"/>
+                                    <barButtonItem title="New Collection" id="HTD-d4-OjH">
+                                        <connections>
+                                            <action selector="getNewCollection:" destination="u6X-SL-s42" id="TKG-Vb-M4J"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="6lx-c0-UvD"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="5ot-Bb-B1y"/>
-                            <constraint firstItem="q98-LA-WK0" firstAttribute="bottom" secondItem="NXS-Uz-G9t" secondAttribute="top" id="CCO-oV-hfV"/>
-                            <constraint firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="CuW-Oe-XNO"/>
-                            <constraint firstItem="q98-LA-WK0" firstAttribute="top" secondItem="fr1-4S-ynY" secondAttribute="bottom" id="DRd-XH-9La"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="M2s-Gu-bwo"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="leading" secondItem="fr1-4S-ynY" secondAttribute="leading" id="dit-TF-gWO"/>
-                            <constraint firstItem="q98-LA-WK0" firstAttribute="leading" secondItem="fr1-4S-ynY" secondAttribute="leading" id="e7w-Hh-utO"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="Anc-1C-pAx"/>
+                            <constraint firstItem="q98-LA-WK0" firstAttribute="bottom" secondItem="NXS-Uz-G9t" secondAttribute="top" id="JPC-3l-DOo"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="q98-LA-WK0" secondAttribute="leading" id="JgB-bK-vLp"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="Saq-r3-oGa"/>
+                            <constraint firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="c4Z-YK-rXY"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="dAi-o9-7eJ"/>
                             <constraint firstItem="5Sw-ko-JDt" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="fGf-xJ-BeY"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="j4O-1B-cyO"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="p9A-M4-8OL"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="5Sw-ko-JDt" secondAttribute="leading" id="pyn-08-XxG"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="bottom" secondItem="q98-LA-WK0" secondAttribute="top" id="qBF-ia-JRn"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="5Sw-ko-JDt" secondAttribute="trailing" id="vfd-jN-44e"/>
                         </constraints>
                     </view>
                     <connections>
@@ -127,7 +123,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9v2-NB-0mn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1066" y="339"/>
+            <point key="canvasLocation" x="1064.8" y="338.68065967016497"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2if-52-bh0">
