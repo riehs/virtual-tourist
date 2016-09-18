@@ -58,7 +58,7 @@
                         <subviews>
                             <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-ko-JDt">
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="131" id="Uon-Rm-e6T"/>
+                                    <constraint firstAttribute="height" constant="129" id="ASQ-js-Lbe"/>
                                 </constraints>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-4S-ynY" customClass="PhotoCollectionView" customModule="Virtual_Tourist" customModuleProvider="target">
@@ -107,16 +107,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="925-KG-ArI"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="J5r-Ak-6Kx"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="q98-LA-WK0" secondAttribute="leading" id="JL7-5y-ziK"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="UNd-EI-Op2"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="ZRG-s5-ekj"/>
-                            <constraint firstItem="q98-LA-WK0" firstAttribute="top" secondItem="fr1-4S-ynY" secondAttribute="bottom" id="bfa-Wa-WZ6"/>
-                            <constraint firstItem="q98-LA-WK0" firstAttribute="bottom" secondItem="NXS-Uz-G9t" secondAttribute="top" id="gxK-Rd-5Qg"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="rxX-Dk-A8l"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="leading" secondItem="fr1-4S-ynY" secondAttribute="leading" id="z5s-gy-mne"/>
-                            <constraint firstAttribute="trailing" secondItem="5Sw-ko-JDt" secondAttribute="trailing" id="zli-y3-EjU"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="5Sw-ko-JDt" secondAttribute="trailing" id="1Tz-D6-OlX"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="2ja-t1-ca0"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="BOg-c4-pUS"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="q98-LA-WK0" secondAttribute="leading" id="Eet-cR-dnb"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="5Sw-ko-JDt" secondAttribute="leading" id="Ke2-dB-pLI"/>
+                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="PQT-zv-fBL"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="RDc-eT-dl3"/>
+                            <constraint firstItem="q98-LA-WK0" firstAttribute="bottom" secondItem="NXS-Uz-G9t" secondAttribute="top" id="XLD-Ur-sp3"/>
+                            <constraint firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="lFY-sH-h0Y"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="bottom" secondItem="q98-LA-WK0" secondAttribute="top" id="wQW-bQ-LJf"/>
                         </constraints>
                     </view>
                     <connections>
