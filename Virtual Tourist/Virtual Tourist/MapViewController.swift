@@ -136,7 +136,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		}
 
 		if error != nil {
-			print("Error in fetchMap(): \(error)")
+			print("Error in fetchMap(): \(String(describing: error))")
 		}
 
 		return results as! [Map]
@@ -156,7 +156,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		}
 
 		if error != nil {
-			print("Error in fetchAllPins(): \(error)")
+			print("Error in fetchAllPins(): \(String(describing: error))")
 		}
 
 		return results as! [Pin]

@@ -52,7 +52,7 @@ class Pin: NSManagedObject, MKAnnotation {
 		}
 
 		if error != nil {
-			print("Error in fetchAllPins(): \(error)")
+			print("Error in fetchAllPins(): \(String(describing: error))")
 		}
 
 		return results as! [Pin]
