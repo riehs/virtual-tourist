@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oDj-Wg-IWJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="oDj-Wg-IWJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -62,7 +62,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Sw-ko-JDt">
-                                <rect key="frame" x="0.0" y="64" width="375" height="0.0"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="131"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="131" id="HAM-Oj-Egu"/>
+                                </constraints>
                             </mapView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fr1-4S-ynY" customClass="PhotoCollectionView" customModule="Virtual_Tourist" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="191" width="375" height="432"/>
@@ -114,17 +117,16 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="2ja-t1-ca0"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="BOg-c4-pUS"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="q98-LA-WK0" secondAttribute="leading" id="Eet-cR-dnb"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="leading" secondItem="fr1-4S-ynY" secondAttribute="leading" id="GRR-Er-jb3"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="Lyh-e4-QFp"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="bottom" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="N3E-v2-SHB"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="RDc-eT-dl3"/>
+                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="Ena-EU-dsq"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="q98-LA-WK0" secondAttribute="leading" id="IDf-UR-XuN"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="bottom" secondItem="q98-LA-WK0" secondAttribute="top" id="M5G-oC-ELZ"/>
+                            <constraint firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="NDU-Nd-x7a"/>
+                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="leading" secondItem="fr1-4S-ynY" secondAttribute="leading" id="PJo-m9-HCl"/>
+                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="TMa-fr-y0i"/>
                             <constraint firstItem="q98-LA-WK0" firstAttribute="bottom" secondItem="NXS-Uz-G9t" secondAttribute="top" id="XLD-Ur-sp3"/>
-                            <constraint firstItem="5Sw-ko-JDt" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" id="XNi-WV-lwC"/>
-                            <constraint firstAttribute="trailing" secondItem="fr1-4S-ynY" secondAttribute="trailing" id="lFY-sH-h0Y"/>
-                            <constraint firstItem="fr1-4S-ynY" firstAttribute="bottom" secondItem="q98-LA-WK0" secondAttribute="top" id="wQW-bQ-LJf"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="top" secondItem="Ewt-Na-2LH" secondAttribute="bottom" constant="127" id="bfV-cK-waE"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="leading" secondItem="0Cu-y2-uPP" secondAttribute="leading" id="dIM-Qs-hAo"/>
+                            <constraint firstItem="fr1-4S-ynY" firstAttribute="trailing" secondItem="q98-LA-WK0" secondAttribute="trailing" id="jQ8-Gq-4sS"/>
                         </constraints>
                     </view>
                     <connections>
