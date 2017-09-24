@@ -53,7 +53,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	}
 
 
-	func action(_ gestureRecognizer:UIGestureRecognizer) {
+	@objc func action(_ gestureRecognizer:UIGestureRecognizer) {
 		if gestureRecognizer.isEnabled {
 			gestureRecognizer.isEnabled = false
 
