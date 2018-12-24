@@ -102,7 +102,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	//Sends the the pin that was tapped on to the PhotoAlbumViewController.
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 			let photoAlbumVC:PhotoAlbumViewController = segue.destination as! PhotoAlbumViewController
-			photoAlbumVC.pin = sender as! Pin
+		photoAlbumVC.pin = sender as? Pin
 	}
 
 
